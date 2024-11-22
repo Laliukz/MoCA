@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     const buttons = document.querySelectorAll("button.word");
-    const hasFileDownloaded = sessionStorage.getItem('fileDownloaded');
-    const speakButton = document.getElementById('speakButton');
+    const hasFileDownloaded = sessionStorage.getItem('fileDownloaded'); // Estado de descarga de archivo
 
+    //Mostrar palabras una por una
     function showWords(words) {
         let index = 0;
         function showNextWord() {
@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
         showNextWord();
     }
 
+    //Guardar palabras seleccionadas en un archivo
     function saveSelectedWords(words) {
         const blob = new Blob([words.join('\n')], { type: 'text/plain' });
         const link = document.createElement('a');
@@ -35,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
         sessionStorage.setItem('fileDownloaded', 'true');
     }
 
+    //Secuencia de palabras con SpeechSynthesis
     function startWordSequence(words, callback) {
         const speech = new SpeechSynthesisUtterance(words);
         speech.lang = 'es-ES';
@@ -42,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function() {
         window.speechSynthesis.speak(speech);
     }
 
+    // Leer la página y luego iniciar la secuencia de palabras
     function readPageAndStartSequence(sequenceText, callback) {
         const textToRead = document.body.innerText;
         const speech = new SpeechSynthesisUtterance(textToRead);
@@ -50,7 +53,18 @@ document.addEventListener("DOMContentLoaded", function() {
         window.speechSynthesis.speak(speech);
     }
 
+    //Botones de altavoz a los elementos
     function addSpeakerButtons() {
+        const paragraphs = document.querySelectorAll('p, h1, h2');
+        paragraphs.forEach(paragraph => {
+            const speakerButton = paragraph.querySelector('.speaker-button');
+            speakerButton.addEventListener('click', () => {
+                const speech = new SpeechSynthesisUtterance(paragraph.innerText);
+                speech.lang = 'es-ES';
+                window.speechSynthesis.speak(speech);
+            });
+        });
+
         buttons.forEach(button => {
             const speakerButton = button.querySelector('.speaker-button');
             speakerButton.addEventListener('click', (event) => {
@@ -72,13 +86,18 @@ document.addEventListener("DOMContentLoaded", function() {
                     const words = data.split('\n').map(word => word.trim()).filter(word => word.length > 0);
                     let index = 0;
                     const selectedWords = [];
+                    const usedIndices = new Set();
 
                     function showNextWord() {
                         if (index < buttons.length) {
                             const button = buttons[index];
                             const speakerButton = button.querySelector('.speaker-button');
                             speakerButton.style.display = 'none';
-                            const randomIndex = Math.floor(Math.random() * words.length);
+                            let randomIndex;
+                            do {
+                                randomIndex = Math.floor(Math.random() * words.length);
+                            } while (usedIndices.has(randomIndex));
+                            usedIndices.add(randomIndex);
                             const selectedWord = words[randomIndex];
                             selectedWords.push(selectedWord);
                             button.textContent = selectedWord;
@@ -108,6 +127,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 })
                 .catch(error => console.error('Error al cargar las palabras seleccionadas:', error));
         }
+
+        window.addEventListener('beforeunload', function(e) {
+            e.preventDefault();
+            e.returnValue = '';
+        });
     }
 
     if (window.location.pathname.endsWith('P2.html')) {
@@ -120,6 +144,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(error => console.error('Error al cargar las palabras seleccionadas:', error));
     }
 
+    const speakButton = document.querySelector('#speakButton');
     speakButton.addEventListener('click', () => {
         if (window.location.pathname.endsWith('P2.html')) {
             readPageAndStartSequence("Segundo intento", () => {
@@ -140,13 +165,18 @@ document.addEventListener("DOMContentLoaded", function() {
                             const words = data.split('\n').map(word => word.trim()).filter(word => word.length > 0);
                             let index = 0;
                             const selectedWords = [];
+                            const usedIndices = new Set();
 
                             function showNextWord() {
                                 if (index < buttons.length) {
                                     const button = buttons[index];
                                     const speakerButton = button.querySelector('.speaker-button');
                                     speakerButton.style.display = 'none';
-                                    const randomIndex = Math.floor(Math.random() * words.length);
+                                    let randomIndex;
+                                    do {
+                                        randomIndex = Math.floor(Math.random() * words.length);
+                                    } while (usedIndices.has(randomIndex));
+                                    usedIndices.add(randomIndex);
                                     const selectedWord = words[randomIndex];
                                     selectedWords.push(selectedWord);
                                     button.textContent = selectedWord;
@@ -179,6 +209,36 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
     });
+
+    const micButton = document.getElementById('micButton');
+    let mediaRecorder;
+    let audioChunks = [];
+
+    micButton.addEventListener('click', () => {
+        if (mediaRecorder && mediaRecorder.state === 'recording') {
+            mediaRecorder.stop();
+        } else {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.start();
+
+                    mediaRecorder.addEventListener('dataavailable', event => {
+                        audioChunks.push(event.data);
+                    });
+
+                    mediaRecorder.addEventListener('stop', () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        const link = document.createElement('a');
+                        link.href = audioUrl;
+                        link.download = 'grabacion.wav';
+                        link.click();
+                        link.remove();
+                        audioChunks = [];
+                    });
+                })
+                .catch(error => console.error('Error al acceder al micrófono:', error));
+        }
+    });
 });
-
-

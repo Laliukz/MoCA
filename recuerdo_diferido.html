@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuerdo Diferido - Evaluación MoCA</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Recuerdo Diferido</h1>
+        <p>Por favor, recuerda las palabras indicadas anteriormente. Puedes escribirlas o hacer clic en el ícono de micrófono para dictarlas.</p>
+
+        <form id="recuerdo-diferido-form">
+            <label for="palabra1">Palabra 1:</label>
+            <input type="text" id="palabra1" name="palabra1" required>
+            <button type="button" class="mic-button" onclick="dictarRespuesta('palabra1')">🎤</button>
+
+            <label for="palabra2">Palabra 2:</label>
+            <input type="text" id="palabra2" name="palabra2" required>
+            <button type="button" class="mic-button" onclick="dictarRespuesta('palabra2')">🎤</button>
+
+            <label for="palabra3">Palabra 3:</label>
+            <input type="text" id="palabra3" name="palabra3" required>
+            <button type="button" class="mic-button" onclick="dictarRespuesta('palabra3')">🎤</button>
+
+            <label for="palabra4">Palabra 4:</label>
+            <input type="text" id="palabra4" name="palabra4" required>
+            <button type="button" class="mic-button" onclick="dictarRespuesta('palabra4')">🎤</button>
+
+            <label for="palabra5">Palabra 5:</label>
+            <input type="text" id="palabra5" name="palabra5" required>
+            <button type="button" class="mic-button" onclick="dictarRespuesta('palabra5')">🎤</button>
+
+            <button type="submit">Enviar Respuestas</button>
+        </form>
+    </div>
+
+    <script src="preguntas.js"></script>
+</body>
+</html>

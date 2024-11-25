@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="menu-item" style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="#">Menu</a>
+                <button type="button" id="login_medico" onclick="location.href='../login/login_medico.html'">Iniciar sesión</button>
+            </div>
+            <img src="../Logos/Escudo_BUAP_Negativo.png" alt="Logo" class="logo">
+        </nav>
+    </header>
+    <main>
+        <div class="form-container">
+            <h1>Registrar Médico:</h1>
+            <form action="/sign-up" method="post">
+                <label for="Nombre">Nombre(s):</label>
+                <input type="text" id="Nombre" name="Nombre" required>
+                <label for="ApellidoP">Apellido Paterno:</label>
+                <input type="text" id="ApellidoPa" name="ApellidoPa" required>
+                <label for="ApellidoM">Apellido Materno:</label>
+                <input type="text" id="ApellidoMa" name="ApellidoMa" required>
+                <label for="Fecha-nacimiento">Fecha de nacimiento:</label>
+                <input type="date" id="Fecha-nacimiento" name="Fecha-nacimiento" required>
+                <br> <br>
+                <label for="Cedula">Cedula Profesional:</label>
+                <input type="text" id="Cedula" name="Cedula" required>
+                <label for="usuario">Usuario:</label>
+                <input type="text" id="usuario" name="usuario" required>
+                <label for="contrasena">Contraseña:</label>
+                <input type="password" id="contrasena" name="contrasena" required>
+                <label for="contrasena2">Confirmar Contraseña:</label>
+                <input type="password" id="contrasena2" name="contrasena2" required>
+                <button type="submit" onclick="location.href=''">Ingresar</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

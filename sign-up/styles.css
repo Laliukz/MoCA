@@ -1,0 +1,142 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #003B49;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #003B49;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #003B49;
+}
+
+header {
+    width: 100%;
+    background-color: #003B49;
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+}
+
+.menu-item a {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.menu-item button {
+    background-color: white;
+    color: #007BFF;
+    border: 1px solid #007BFF;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.menu-item button:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.logo {
+    height: 50px;
+    margin: 0 auto;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding-top: 60px; /* Para evitar que el contenido quede debajo del header */
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    .form-container {
+        width: 90%;
+    }
+
+    nav {
+        flex-direction: column;
+    }
+
+    .menu-item {
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .logo {
+        margin: 10px 0;
+    }
+}

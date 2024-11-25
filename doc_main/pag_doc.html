@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoCA - Inicio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Test MoCA</h1>
+        <nav>
+            <a href="login_medico.html">Iniciar Sesión (Médico)</a>
+            <button type="button" id="Test_menu" oneclick="location.href=''"></button>
+            <a href="registro_paciente.html">Realizar Test</a>
+            <img src="../Logos/Escudo_BUAP_Negativo.png" alt="Logo" class="logo">
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Acerca del Test MoCA</h2>
+            <p>El Test MoCA es una evaluación cognitiva que ayuda a detectar problemas de memoria y otras funciones cognitivas.</p>
+        </section>
+        <main>
+            <label for="BuscarP">Buscar paciente:</label>
+            <input type="text" id="BuscarP" name="BuscarP" required>
+            <button type="submit" onclick="location.href='pag_doc.html'">Buscar</button>
+            <br>
+            <label for="O"> O</label>
+            <br>
+            <button type="submit" onclick="location.href='../Paciente_main/Registro/registro_paciente.html'">Registrar nuevo paciente</button>
+        </main>
+    </main>
+</body>
+</html>

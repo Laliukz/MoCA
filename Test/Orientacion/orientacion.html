@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orientación - Evaluación MoCA</title>
+    <link rel="stylesheet" href="stylesorientacion.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Orientación</h1>
+        <p><img src="altavoz.png" alt="Leer" class="speaker-button">Por favor, responde las siguientes preguntas para evaluar tu orientación. Puedes escribir tus respuestas o hacer clic en el ícono de micrófono para dictarlas.</p>
+        
+        <form id="orientacion-form">
+            <div class="form-container">
+                <div class="question">
+                    <label for="fecha"><img src="altavoz.png" alt="Leer" class="speaker-button">¿Cuál es la fecha de hoy? (día, mes y año):</label>
+                    <input type="text" id="fecha" name="fecha" required>
+                    <button class= "button" type="button" onclick="dictarRespuesta('fecha')">🎤</button>
+                </div>
+        
+                <div class="question">
+                    <label for="dia"><img src="altavoz.png" alt="Leer" class="speaker-button">¿Qué día de la semana es hoy?</label>
+                    <input type="text" id="dia" name="dia" required>
+                    <button type="button" onclick="dictarRespuesta('dia')">🎤</button>
+                </div>
+        
+                <div class="question">
+                    <label for="lugar"><img src="altavoz.png" alt="Leer" class="speaker-button">¿Dónde estamos ahora mismo? (nombre del lugar o institución):</label>
+                    <input type="text" id="lugar" name="lugar" required>
+                    <button type="button" onclick="dictarRespuesta('lugar')">🎤</button>
+                </div>
+        
+                <div class="question">
+                    <label for="ciudad"><img src="altavoz.png" alt="Leer" class="speaker-button">¿En qué ciudad estamos?</label>
+                    <input type="text" id="ciudad" name="ciudad" required>
+                    <button type="button" onclick="dictarRespuesta('ciudad')">🎤</button>
+                </div>
+            </div>
+            <button type="submit">Enviar Respuestas</button>
+        </form>
+    </div>
+
+    <script src="orientacion.js"></script>
+</body>
+</html>

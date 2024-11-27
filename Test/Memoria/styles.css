@@ -7,11 +7,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url('buap.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: auto;
-    background-blend-mode: overlay;
 }
 
 header {
@@ -178,4 +173,11 @@ footer {
     bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-left: 5px;
 }

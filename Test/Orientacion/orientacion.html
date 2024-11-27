@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="stylesorientacion.css">
 </head>
 <body>
+    <header>
+        <nav>
+            <div class="menu-item">
+                <h1>MoCa</h1>
+            </div>
+        </nav>
+        <img src="../../Logos/Escudo_BUAP_Negativo.png" alt="Logo" class="logo">
+    </header>
     <div class="container">
         <h1>Orientación</h1>
         <p><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button">Por favor, responde las siguientes preguntas para evaluar tu orientación. Puedes escribir tus respuestas o hacer clic en el ícono de micrófono para dictarlas.</p>
@@ -14,7 +22,7 @@
         <form id="orientacion-form">
             <div class="form-container">
                 <div class="question">
-                    <label for="fecha"><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button">¿Cuál es la fecha de hoy? (día, mes y año):</label>
+                    <label class="label" for="fecha"><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button">¿Cuál es la fecha de hoy? (día, mes y año):</label>
                     <input type="text" id="fecha" name="fecha" required>
                     <button class= "button" type="button" onclick="dictarRespuesta('fecha')">🎤</button>
                 </div>
@@ -37,7 +45,7 @@
                     <button type="button" onclick="dictarRespuesta('ciudad')">🎤</button>
                 </div>
             </div>
-            <button type="submit">Enviar Respuestas</button>
+            <button type="button" id="siguiente" type="submit">Enviar</button>
         </form>
     </div>
 

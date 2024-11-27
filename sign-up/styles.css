@@ -20,6 +20,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
+    margin: 20px; /* Añadir margen para simetría */
 }
 
 h1 {
@@ -29,8 +30,9 @@ h1 {
 }
 
 input[type="text"],
-input[type="password"] {
-    width: 100%;
+input[type="password"],
+input[type="date"] {
+    width: calc(100% - 22px); /* Ajustar el ancho para que se amolde al contenedor */
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
@@ -49,7 +51,7 @@ button {
 }
 
 button:hover {
-    background-color: #003B49;
+    background-color: #00B5E3;
 }
 
 header {
@@ -64,14 +66,19 @@ header {
 
 nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Centrar el logo */
     align-items: center;
     padding: 0 20px;
+    position: relative; /* Añadir posición relativa */
 }
 
 .menu-item {
     display: flex;
     align-items: center;
+    position: absolute; /* Posicionar el botón en la parte superior derecha */
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .menu-item a {
@@ -82,8 +89,8 @@ nav {
 
 .menu-item button {
     background-color: white;
-    color: #007BFF;
-    border: 1px solid #007BFF;
+    color: #003B49;
+    border: 1px solid #003B49;
     border-radius: 4px;
     padding: 5px 10px;
     cursor: pointer;
@@ -91,13 +98,13 @@ nav {
 }
 
 .menu-item button:hover {
-    background-color: #0056b3;
+    background-color: #00B5E3;
     color: white;
 }
 
 .logo {
     height: 50px;
-    margin: 0 auto;
+    margin: 0;
 }
 
 main {

@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Realizar Test - Datos del Paciente</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="regpaciente.css">
 </head>
 <body>
+    <nav>
+        <h1>MoCA</h1>
+        <img src="../../Logos/Escudo_BUAP_Negativo.png" alt="Logo" class="logo">
+    </nav>
     <!-- Cambiamos el action para que apunte a guardar_paciente.php -->
-    <form action="guardar_paciente.php" method="post" class="form-container" onsubmit="return redirigirDashboard()">
+    <form action="guardar_paciente" method="post" class="form-container">
         <h2>Datos del Paciente</h2>
 
         <label for="nombre">Nombre:</label>
@@ -25,18 +29,8 @@
 
         <input type="hidden" id="fecha_registro" name="fecha_registro" value="">
 
-        <button type="submit" id="guardar">Dar de alta al paciente</button>
+        <button type="button" id="guardar" onclick="location.href='../dashboard_medico.html'">Dar de alta al paciente</button>
     </form>
 
-    <script>
-        document.getElementById("fecha_registro").value = new Date().toISOString().split('T')[0];
-
-        function redirigirDashboard() {
-            setTimeout(function() {
-                window.location.href = '../Paciente_main/dashboard_medico.html';
-            }, 1000); // Espera 1 segundo antes de redirigir
-            return true;
-        }
-    </script>
 </body>
 </html>

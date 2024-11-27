@@ -8,11 +8,8 @@
 </head>
 <body>
     <header>
-        <h1>Test MoCA</h1>
+        <h1>MoCA</h1>
         <nav>
-            <a href="login_medico.html">Iniciar Sesión (Médico)</a>
-            <button type="button" id="Test_menu" oneclick="location.href=''"></button>
-            <a href="registro_paciente.html">Realizar Test</a>
             <img src="../Logos/Escudo_BUAP_Negativo.png" alt="Logo" class="logo">
         </nav>
     </header>
@@ -24,11 +21,11 @@
         <main>
             <label for="BuscarP">Buscar paciente:</label>
             <input type="text" id="BuscarP" name="BuscarP" required>
-            <button type="submit" onclick="location.href='pag_doc.html'">Buscar</button>
+            <button type="button" id="buscarB" onclick="location.href='../Paciente_main/dashboard_medico.html'">Buscar</button>
             <br>
             <label for="O"> O</label>
             <br>
-            <button type="submit" onclick="location.href='../Paciente_main/Registro/registro_paciente.html'">Registrar nuevo paciente</button>
+            <button type="button" id="registro" onclick="location.href='../Paciente_main/Registro/registro_paciente.html'">Registrar nuevo paciente</button>
         </main>
     </main>
 </body>

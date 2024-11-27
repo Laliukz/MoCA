@@ -4,15 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel del Médico - MoCA</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="resultado.css">
 </head>
 <body>
-    <header>
-        <h1>Panel del Médico</h1>
-        <nav>
-            <a href="ver_resultados.html">Ver Resultados de Tests</a>
-            <a href="logout.html">Cerrar Sesión</a>
-        </nav>
-    </header>
+    <nav>
+        <h1>MoCa</h1>
+        <img src="../Logos/Escudo_BUAP_Negativo.png" alt="Logo" class="logo">
+    </nav>
+    <main>
+        <div class="container">
+            <h1>Panel del Médico</h1>
+            <label for="Nombre" id="nombreP">Nombre del paciente:</label>
+            <input type="text" id="Nombre" name="Nombre" required>
+            <button type="button" id="resultado" onclick="location.href='../Paciente_main/Resultados/ver_resultados.html'">Ver pruebas anteriores</button>
+            <button type="button" id="moca" onclick="location.href='../Test/iniciar_test.html'">Realizar nueva evaluación</button>
+        </div>
+        <br>
+    </main>
+    <table id="resultados" style="display: table;">
+        <h1>Ultima evaluación</h1>
+        <tr>
+            <th>Evaluación</th>
+            <th>Fecha de eval.</th>
+            <th>Valor de la prueba</th>
+            <th>Interpretación</th>
+        </tr>
+        <tr>
+            <td><b>Memoria</b></td>
+            <td>Dato 2</td>
+            <td>Dato 3</td>
+            <td>Dato 4</td>
+        </tr>
+        <tr>
+            <td><b>Recuerdo diferido</b></td>
+            <td>Dato 6</td>
+            <td>Dato 7</td>
+            <td>Dato 8</td>
+        </tr>
+        <tr>
+            <td><b>Orientación</b></td>
+            <td>Dato 10</td>
+            <td>Dato 11</td>
+            <td>Dato 12</td>
+        </tr>
+    </table>
+
+    <script src="resultados.js"></script>        
 </body>
 </html>

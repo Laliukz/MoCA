@@ -175,6 +175,21 @@ input {
     font-size: 14px;
 }
 
+.fechas {
+    display: flex;
+    flex-direction:row;
+    gap: 5px;
+    margin-left: 60px;
+}
+.fechas input{
+    width: 100%;
+    max-width: 300px; 
+    padding: 10px 5px;
+    border: 1px solid #ccc;
+    border-radius: 80px;
+    font-size: 14px;
+}
+
 
 @media (max-width: 600px) {
     nav a, button {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orientación - Evaluación MoCA</title>
+    <title>Orientación</title>
     <link rel="stylesheet" href="stylesorientacion.css">
 </head>
 <body>
@@ -22,30 +22,38 @@
         <form id="orientacion-form">
             <div class="form-container">
                 <div class="question">
-                    <label class="label" for="fecha"><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button">¿Cuál es la fecha de hoy? (día, mes y año):</label>
-                    <input type="text" id="fecha" name="fecha" required>
-                    <button class= "button" type="button" onclick="dictarRespuesta('fecha')">🎤</button>
+                    <p><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button">¿Cuál es la fecha de hoy?:</p>
+                    <div class="fechas">
+                        <p><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button"> día:</p>
+                          <input type="text" id="dia" name="dia" required>
+
+                        <p><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button"> Mes:</p>
+                          <input type="text" id="mes" name="mes" required>
+
+                        <p><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button"> Año:</p>
+                          <input type="text" id="año" name="año" required>
+
+                    </div>
                 </div>
         
                 <div class="question">
-                    <label for="dia"><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button">¿Qué día de la semana es hoy?</label>
-                    <input type="text" id="dia" name="dia" required>
-                    <button type="button" onclick="dictarRespuesta('dia')">🎤</button>
+                    <p><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button">¿Qué día de la semana es hoy?: </p>
+                        <input type="text" id="dia" name="dia" required>
                 </div>
         
                 <div class="question">
-                    <label for="lugar"><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button">¿Dónde estamos ahora mismo? (nombre del lugar o institución):</label>
-                    <input type="text" id="lugar" name="lugar" required>
-                    <button type="button" onclick="dictarRespuesta('lugar')">🎤</button>
+                    <p><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button">¿Dónde estamos ahora mismo? (nombre del lugar o institución):</p>
+                        <input type="text" id="lugar" name="lugar" required>
                 </div>
         
                 <div class="question">
-                    <label for="ciudad"><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button">¿En qué ciudad estamos?</label>
-                    <input type="text" id="ciudad" name="ciudad" required>
-                    <button type="button" onclick="dictarRespuesta('ciudad')">🎤</button>
+                    <p><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button">¿En qué ciudad estamos?</p>
+                        <input type="text" id="ciudad" name="ciudad" required>
                 </div>
             </div>
             <button type="button" id="siguiente" type="submit">Enviar</button>
+            <button type="button" id="speakButton">Leer Página</button>
+            <img src="../../Logos/microfono.png" alt="Grabar" class="micButton" id="micButton">
         </form>
     </div>
 

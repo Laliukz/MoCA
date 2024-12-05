@@ -110,10 +110,13 @@ button:hover {
 }
 
 button#siguiente {
-    background-color: #28a745;
+    cursor: pointer;
+    width: 80px; 
+    height: 40px;
+    position: fixed;
     bottom: 10px;
-    right: 10px;
-    margin: 20px;
+    left: 50%;
+    transform: translateX(570px);
 }
 
 button#speakButton {
@@ -175,7 +178,12 @@ input {
     font-size: 14px;
 }
 
+.ciudad{
+    margin-bottom: 100px;
+}
+
 .fechas {
+    padding: 1px;
     display: flex;
     flex-direction:row;
     gap: 5px;
@@ -184,7 +192,6 @@ input {
 .fechas input{
     width: 100%;
     max-width: 300px; 
-    padding: 10px 5px;
     border: 1px solid #ccc;
     border-radius: 80px;
     font-size: 14px;
@@ -217,9 +224,8 @@ input {
     width: 40px; 
     height: 40px;
     position: fixed;
-    bottom: 50px;
+    bottom: 10px;
     left: 50%;
-    transform: translateX(-50%);
 }
 
 .icon {

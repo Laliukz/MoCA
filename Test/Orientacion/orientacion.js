@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+
     const synth = window.speechSynthesis; // Control global de speech synthesis
     let isSpeaking = false; // Variable para rastrear el estado actual
 
@@ -73,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function compareWords(transcription) {
         const transcribedWords = transcription.split(/\s+/).map(word => word.toLowerCase().trim());
         console.log("Palabras transcritas:", transcribedWords);
-
+    
         const inputs = {
             dia: document.getElementById('dia'),
             mes: document.getElementById('mes'),
@@ -82,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
             lugar: document.getElementById('lugar'),
             ciudad: document.getElementById('ciudad')
         };
-
+    
         const expectedAnswers = {
             dia: new Date().getDate().toString(),
             mes: new Date().toLocaleString('es-ES', { month: 'long' }),
@@ -91,40 +92,42 @@ document.addEventListener("DOMContentLoaded", function () {
             lugar: 'buap',
             ciudad: 'puebla'
         };
-
+    
         const monthNames = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-
+        const weekDays = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+    
         // Crear un arreglo para almacenar los valores capturados
         const capturedValues = [];
         let score = 0; // Variable para el puntaje
-
+    
         // Asignar valores transcritos a los inputs y capturarlos
         inputs.dia.value = transcribedWords.find(word => !isNaN(word) && word > 0 && word <= 31) || '';
         capturedValues.push(inputs.dia.value);
-
+    
         inputs.mes.value = transcribedWords.find(word => monthNames.includes(word)) || '';
         capturedValues.push(inputs.mes.value);
-
+    
         inputs.año.value = transcribedWords.find(word => !isNaN(word) && word >= 1900 && word <= new Date().getFullYear()) || '';
         capturedValues.push(inputs.año.value);
-
-        inputs.diaSemana.value = transcribedWords.find(word => ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'].includes(word)) || '';
+    
+        inputs.diaSemana.value = transcribedWords.find(word => weekDays.includes(word)) || '';
         capturedValues.push(inputs.diaSemana.value);
-
+    
+        // Usamos coincidencia más flexible para lugar y ciudad
         inputs.lugar.value = transcribedWords.find(word => word.includes('buap')) || '';
         capturedValues.push(inputs.lugar.value);
-
+    
         inputs.ciudad.value = transcribedWords.find(word => word.includes('puebla')) || '';
         capturedValues.push(inputs.ciudad.value);
-
+    
         console.log("Valores capturados:", capturedValues);
-
+    
         // Comparar y mostrar resultados
         let resultHtml = '<h3>Resultados de la comparación:</h3><ul>';
         Object.keys(inputs).forEach(key => {
             const userAnswer = inputs[key].value.toLowerCase().trim();
             const expectedAnswer = expectedAnswers[key].toLowerCase().trim();
-
+    
             if (userAnswer === expectedAnswer) {
                 resultHtml += `<li>${key}: <span style="color:green">Correcto</span></li>`;
                 score++; // Incrementar el puntaje si es correcto
@@ -132,46 +135,54 @@ document.addEventListener("DOMContentLoaded", function () {
                 resultHtml += `<li>${key}: <span style="color:red">Incorrecto</span> (Esperado: ${expectedAnswer})</li>`;
             }
         });
-
+    
         resultHtml += `</ul><h3>Puntaje total: ${score}/6</h3>`;
         comparisonResults.innerHTML = resultHtml;
-
+    
         console.log("Puntaje final:", score);
         console.log("Resultados mostrados en pantalla.");
 
-        // Enviar los datos al servidor PHP
-        sendResultsToPHP({
+        // Enviar los resultados a PHP
+        saveResults({
             dia: inputs.dia.value,
             mes: inputs.mes.value,
             año: inputs.año.value,
             diaSemana: inputs.diaSemana.value,
             lugar: inputs.lugar.value,
             ciudad: inputs.ciudad.value,
-            puntaje: score
+            puntaje: score,
+            fecha: new Date().toISOString() // Fecha del envío
         });
     }
 
-    function sendResultsToPHP(data) {
-        fetch("orientacion.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(result => {
-            console.log("Respuesta del servidor:", result);
-            if (result.success) {
-                alert(result.message || "Datos enviados correctamente");
-            } else {
-                alert("Error: " + result.message);
-            }
-        })
-        .catch(error => {
-            console.error("Error al enviar los datos:", error);
-            alert("Ocurrió un error al enviar los datos. " + error.message);
+    function saveResults(data) {
+        console.log("Enviando datos a PHP:", data);  // Verificar los datos que se envían
+    
+        // Crear el formulario dinámicamente
+        let form = document.createElement("form");
+        form.method = "POST";
+        form.action = "orientacion.php";
+        
+        // Añadir los datos como campos ocultos al formulario
+        Object.keys(data).forEach(key => {
+            let input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = data[key];
+            form.appendChild(input);
         });
+        
+        // Añadir un campo JSON si es necesario
+        let inputData = document.createElement("input");
+        inputData.type = "hidden";
+        inputData.name = "respuestas";
+        inputData.value = JSON.stringify(data);
+        form.appendChild(inputData);
+        
+        // Añadir el formulario al cuerpo del documento y enviarlo
+        document.body.appendChild(form);
+        form.submit();  // Enviar el formulario
     }
+    
     
 });

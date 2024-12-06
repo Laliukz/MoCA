@@ -1,80 +1,59 @@
 <?php
-header("Content-Type: application/json");
-
-// Mostrar errores para depuración
 ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Configuración de conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "moca";
-
 // Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli('localhost', 'root', '', 'moca');
 
-// Verificar conexión
+// Comprobar la conexión
 if ($conn->connect_error) {
-    die(json_encode(["success" => false, "message" => "Conexión fallida: " . $conn->connect_error]));
+    die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Crear tablas si no existen
-$sql_evaluaciones = "
-CREATE TABLE IF NOT EXISTS evaluaciones (
-    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    fecha DATE NOT NULL,
-    puntaje_total INT(3) NOT NULL
-)";
-$conn->query($sql_evaluaciones);
-
-$sql_respuestas = "
-CREATE TABLE IF NOT EXISTS respuestas (
-    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    evaluacion_id INT(6) UNSIGNED NOT NULL,
-    pregunta VARCHAR(255) NOT NULL,
-    respuesta TEXT NOT NULL,
-    puntaje INT(3) NOT NULL,
-    FOREIGN KEY (evaluacion_id) REFERENCES evaluaciones(id) ON DELETE CASCADE
-)";
-$conn->query($sql_respuestas);
-
-// Obtener datos enviados desde el formulario
-$data = json_decode(file_get_contents("php://input"), true);
-
-// Depuración: verificar si los datos llegan correctamente
-if (!$data) {
-    echo json_encode(["success" => false, "message" => "Datos inválidos o mal formateados."]);
-    exit();
-} else {
-    // Mostrar los datos recibidos para depuración
-    error_log(print_r($data, true));
+// Verificar si los datos han sido enviados
+if (!isset($_POST['respuestas'])) {
+    echo json_encode(['status' => 'error', 'message' => 'Datos inválidos o vacíos']);
+    exit;
 }
 
-// Guardar evaluación en la tabla `evaluaciones`
-$fecha = date("Y-m-d");
-$puntaje_total = $data["puntaje"]; // Usamos el puntaje que viene de JavaScript
-$sql = "INSERT INTO evaluaciones (fecha, puntaje_total) VALUES (?, ?)";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("si", $fecha, $puntaje_total);
-$stmt->execute();
-$evaluacion_id = $stmt->insert_id;
+// Decodificar las respuestas desde el formulario (si fuera un JSON en un campo oculto)
+$data = json_decode($_POST['respuestas'], true);
 
-// Guardar respuestas en la tabla `respuestas`
-foreach ($data as $key => $value) {
-    if ($key !== 'puntaje') {
-        $pregunta = ucfirst($key); // Usamos la clave como pregunta
-        $respuesta = $value;
-        $puntaje = ($value === $data["puntaje"]) ? 1 : 0; // Ejemplo de asignación de puntaje
-        $stmt = $conn->prepare("INSERT INTO respuestas (evaluacion_id, pregunta, respuesta, puntaje) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("isss", $evaluacion_id, $pregunta, $respuesta, $puntaje);
-        $stmt->execute();
+// Comenzar la transacción para asegurar que todas las operaciones sean atómicas
+$conn->begin_transaction();
+
+try {
+    // Suponiendo que tienes un test ID (puedes asignarlo de alguna manera o generar uno)
+    $id_test = uniqid();  // O usar un valor específico si es necesario
+
+    // Insertar las respuestas proporcionadas
+    foreach ($data['respuestas'] as $respuesta) {
+        $id_pregunta = $respuesta['id_pregunta'];
+        $valor_respuesta = $conn->real_escape_string($respuesta['valor_respuesta']);
+        $ubicacion_geografica = $conn->real_escape_string($respuesta['ubicacion_geografica']);
+        $nivel_confianza = $respuesta['nivel_confianza'];
+
+        // Insertar los datos en la tabla 'respuesta_orientacion'
+        $sql = "INSERT INTO respuesta_orientacion (id_test, id_pregunta, valor_respuesta, ubicacion_geografica, nivel_confianza)
+                VALUES ('$id_test', '$id_pregunta', '$valor_respuesta', '$ubicacion_geografica', '$nivel_confianza')";
+
+        if (!$conn->query($sql)) {
+            throw new Exception("Error al insertar en respuesta_orientacion: " . $conn->error);
+        }
     }
+
+    // Confirmar la transacción
+    $conn->commit();
+
+    // Respuesta de éxito
+    echo json_encode(['status' => 'success', 'message' => 'Datos guardados correctamente']);
+
+} catch (Exception $e) {
+    // En caso de error, revertir la transacción
+    $conn->rollback();
+    echo json_encode(['status' => 'error', 'message' => 'Error al guardar los datos: ' . $e->getMessage()]);
 }
 
-// Responder al cliente
-echo json_encode(["success" => true, "message" => "Datos guardados correctamente."]);
-$stmt->close();
+// Cerrar la conexión
 $conn->close();
 ?>

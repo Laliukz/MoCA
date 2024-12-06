@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orientación</title>
     <link rel="stylesheet" href="stylesorientacion.css">
+    <script src="orientacion.js" defer></script> 
 </head>
 <body>
     <header>
@@ -37,7 +38,7 @@
         
                 <div class="question">
                     <p><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button">¿Qué día de la semana es hoy?:</p>
-                    <input type="text" id="diaSemana" name="dia-semana" required>
+                    <input type="text" id="dia-semana" name="dia-semana" required>
                 </div>
         
                 <div class="question">
@@ -47,10 +48,10 @@
         
                 <div class="question">
                     <p><img src="../../Logos/altavoz.png" alt="Leer" class="speaker-button">¿En qué ciudad estamos?</p>
-                    <input class="ciudad" type="text" id="ciudad" name="ciudad" required>
+                    <input type="text" id="ciudad" name="ciudad" required>
                 </div>
             </div>
-            <button type="submit" id="siguiente">Enviar</button>
+            <button type="button" id="siguiente">Enviar</button>
             <button type="button" id="speakButton">Leer Página</button>
             <img src="../../Logos/microfono.png" alt="Grabar" class="micButton" id="micButton">
         </form>

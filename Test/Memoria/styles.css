@@ -2,8 +2,8 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #fcfcfc; /* Pantone 306 C */
-    color: #003B49; /* Pantone 302 C */
+    background-color: #fcfcfc;
+    color: #003B49;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,7 +23,7 @@ header {
 header .logo {
     margin-right: 20px;
     height: 100%;
-    max-height: 50px;
+    max-height: 40px;
 }
 
 nav {
@@ -154,6 +154,48 @@ footer {
     button#next {
         position: static;
         margin: 10px auto;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header .logo {
+        margin: 10px 0;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav a {
+        padding: 10px;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    button {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    button#next, button#speakButton {
+        position: static;
+        margin: 10px auto;
+    }
+
+    .micButton {
+        bottom: 20px;
     }
 }
 

@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", function() {
     recognition.continuous = true;
     recognition.lang = 'es-ES';
     recognition.interimResults = false;
+    const transcriptionText = document.getElementById('transcriptionText');
+    const comparisonProcessText = document.getElementById('comparisonProcessText');
 
     // Quitar todos los íconos y texto de los botones
     buttons.forEach(button => {
@@ -35,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     button.textContent = "";
                     speakerButton.style.display = 'inline';
                     index++;
-                    setTimeout(showNextWord, 10000); // 1.0 segundos entre palabras
+                    setTimeout(showNextWord, 1000); // 1.0 segundos entre palabras
                 };
             }
         }
@@ -112,14 +114,15 @@ document.addEventListener("DOMContentLoaded", function() {
                     mediaRecorder.addEventListener('stop', () => {
                         audioChunks = [];
                         micButton.src = "../../Logos/microfono.png"; // Cambiar icono a microfono
-                        compareWords(transcription.trim() + ' '); // Comparar palabras después de la transcripción
+                        compareWords(transcription.trim()); // Comparar palabras después de la transcripción
+                        transcriptionText.textContent = transcription.trim(); // Mostrar la transcripción
                         transcription = ''; // Reiniciar la transcripción
                     });
 
                     setTimeout(() => {
                         mediaRecorder.stop();
                         recognition.stop();
-                    }, 8000); // Detener la grabación después de 8 segundos
+                    }, 7000); // Detener la grabación después de 7 segundos
                 })
                 .catch(error => console.error('Error al acceder al micrófono:', error));
         }
@@ -127,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     recognition.onresult = (event) => {
         transcription += event.results[event.results.length - 1][0].transcript + ' ';
+        transcriptionText.textContent = transcription.trim(); // Actualizar la transcripción en tiempo real
     };
 
     recognition.onend = () => {
@@ -139,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => response.text())
             .then(data => {
                 const selectedWords = data.split('\n').map(word => word.trim().toLowerCase()).filter(word => word.length > 0);
-                const transcribedWords = (transcription + 'word').split(/[ ,]+/).map(word => word.trim().toLowerCase()).filter(word => word.length > 0);
+                const transcribedWords = transcription.replace(/\.$/, '').split(/[ ,]+/).map(word => word.trim().toLowerCase()).filter(word => word.length > 0);
 
                 buttons.forEach((button, index) => {
                     const word = button.dataset.word ? button.dataset.word.trim().toLowerCase() : '';
@@ -153,12 +157,15 @@ document.addEventListener("DOMContentLoaded", function() {
                     button.appendChild(icon);
                 });
 
-                // Mostrar resultados de la comparación
+                /* Mostrar resultados de la comparación
                 comparisonResults.innerHTML = '<h3>Resultados de la Comparación:</h3>';
                 selectedWords.forEach((word, index) => {
                     const result = transcribedWords.includes(word) ? 'Correcto' : 'Incorrecto';
                     comparisonResults.innerHTML += `<p>${word}: ${result}</p>`;
                 });
+
+                // Mostrar el proceso de comparación
+                comparisonProcessText.innerHTML = `Palabras seleccionadas: ${selectedWords.join(', ')}<br>Palabras transcritas: ${transcribedWords.join(', ')}`;*/
             })
             .catch(error => console.error('Error al cargar las palabras seleccionadas:', error));
     }
